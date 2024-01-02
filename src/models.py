@@ -19,7 +19,6 @@ class User(db.Model):
             "id": self.id,
             "email": self.email,
             "created": self.created
-            # do not serialize the password, its a security breach
         }
     
 class Favorite(db.Model):
