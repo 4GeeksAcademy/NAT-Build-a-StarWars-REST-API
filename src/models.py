@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from sqlalchemy import BigInteger
 
 db = SQLAlchemy()
 
@@ -28,7 +29,7 @@ class Favorite(db.Model):
     people_id = db.Column(db.Integer, db.ForeignKey('people.id'), nullable=False)
 
     def __repr__(self):
-        return '<Favorite %>' % self.id
+        return '<Favorite %r>' % self.id
     
     def serialize(self):
         return {
@@ -41,13 +42,13 @@ class Favorite(db.Model):
 class Planets(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db. Column(db.String(120), nullable=False)
-    population = db.Column(db.Integer, nullable=False)
+    population = db.Column(BigInteger, nullable=False)
     climate = db.Column(db.String, nullable=False )
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     planets_favorite =db.relationship("Favorite", backref="planets", uselist=True)
 
     def __repr__(self):
-        return '<Planets %>' % self.name
+        return '<Planets %r' % self.name
     
     def serialize(self):
         return {
@@ -74,7 +75,7 @@ class People(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "population": self.population,
-            "climate": self.climate,
+            "gender": self.gender,
+            "age": self.age,
             "created": self.created
         }
